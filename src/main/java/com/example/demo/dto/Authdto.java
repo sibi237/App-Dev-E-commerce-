@@ -1,5 +1,6 @@
 package com.example.demo.dto;
 
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,19 +11,20 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class dto {
+public class Authdto {
 
     private Long id;
 
     @JsonProperty("name")
-    private String Name;
-
-    @JsonProperty("email_id")
-    private String email;
+    private String name;
     
+    @JsonProperty("email")
+    private String email;
+
     @JsonProperty("password")
     private String password;
-    
-    @JsonProperty("confirm_pass")
+
+    @JsonProperty("confirmpass")
     private String confirmpass;
+   
 }

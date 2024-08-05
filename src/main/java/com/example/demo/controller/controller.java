@@ -1,59 +1,54 @@
 package com.example.demo.controller;
 
-import lombok.AllArgsConstructor;
 
+import com.example.demo.entity.entity;
+import com.example.demo.service.service;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.demo.dto.dto;
-import com.example.demo.service.service;
-
 import java.util.List;
+import java.util.Optional;
 
-@CrossOrigin("*")
-@AllArgsConstructor
+@CrossOrigin("http://localhost:3000/")
 @RestController
-@RequestMapping("/api/prime")
-
+@RequestMapping("/api/ent")
 public class controller {
-	@Autowired
-    private service signupService;
 
-    // Build Add Employee REST API
+    @Autowired
+    private service entityService;
+
     @PostMapping
-    public ResponseEntity<dto> createEmployee(@RequestBody dto signupDto){
-        dto savedEmployee = signupService.createEmployee(signupDto);
-        return new ResponseEntity<>(savedEmployee, HttpStatus.CREATED);
+    public ResponseEntity<entity> createEntity(@RequestBody entity entity) {
+        return ResponseEntity.ok(entityService.saveEntity(entity));
     }
 
-    // Build Get Employee REST API
-    @GetMapping("{id}")
-    public ResponseEntity<dto> getEmployeeById(@PathVariable("id") Long signupId){
-        dto employeeDto = signupService.getEmployeeById(signupId);
-        return ResponseEntity.ok(employeeDto);
-    }
-
-    // Build Get All Employees REST API
     @GetMapping
-    public ResponseEntity<List<dto>> getAllEmployees(){
-        List<dto> employees = signupService.getAllEmployees();
-        return ResponseEntity.ok(employees);
+    public ResponseEntity<List<entity>> getAllEntities() {
+        return ResponseEntity.ok(entityService.findAllEntities());
     }
 
-    // Build Update Employee REST API
-    @PutMapping("{id}")
-    public ResponseEntity<dto> updateEmployee(@PathVariable("id") Long signupId,
-                                                      @RequestBody dto updatedEmployee){
-          dto employeeDto = signupService.updateEmployee(signupId, updatedEmployee);
-          return ResponseEntity.ok(employeeDto);
+    @GetMapping("/{id}")
+    public ResponseEntity<entity> getEntityById(@PathVariable Long id) {
+        Optional<entity> entity = entityService.findEntityById(id);
+        return entity.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // Build Delete Employee REST API
-    @DeleteMapping("{id}")
-    public ResponseEntity<String> deleteEmployee(@PathVariable("id") Long employeeId){
-        signupService.deleteEmployee(employeeId);
-        return ResponseEntity.ok("Employee deleted successfully!.");
+    @PutMapping("/{id}")
+    public ResponseEntity<entity> updateEntity(@PathVariable Long id, @RequestBody entity entity) {
+        if (!entityService.findEntityById(id).isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        entity.setId(id);
+        return ResponseEntity.ok(entityService.saveEntity(entity));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteEntity(@PathVariable Long id) {
+        if (!entityService.findEntityById(id).isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        entityService.deleteEntity(id);
+        return ResponseEntity.noContent().build();
     }
 }

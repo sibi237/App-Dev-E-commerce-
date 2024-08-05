@@ -1,19 +1,32 @@
 package com.example.demo.service;
 
-import java.util.List;
-
+import com.example.demo.entity.entity;
+import com.example.demo.repo.repo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.dto.dto;
+import java.util.List;
+import java.util.Optional;
+
 @Service
-public interface service {
-    dto createEmployee(dto employeeDto);
+public class service {
+    
+    @Autowired
+    private repo entityRepository;
 
-    dto getEmployeeById(Long employeeId);
+    public entity saveEntity(entity entity) {
+        return entityRepository.save(entity);
+    }
 
-    List<dto> getAllEmployees();
+    public List<entity> findAllEntities() {
+        return entityRepository.findAll();
+    }
 
-    dto updateEmployee(Long employeeId, dto updatedEmployee);
+    public Optional<entity> findEntityById(Long id) {
+        return entityRepository.findById(id);
+    }
 
-    void deleteEmployee(Long employeeId);
+    public void deleteEntity(Long id) {
+        entityRepository.deleteById(id);
+    }
 }

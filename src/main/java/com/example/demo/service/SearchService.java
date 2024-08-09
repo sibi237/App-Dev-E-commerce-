@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.example.demo.entity.Product;
 import com.example.demo.repo.SearchRepo;
 
@@ -14,7 +13,7 @@ public class SearchService {
     @Autowired
     private SearchRepo productRepository;
 
-    public List<Product> findByNameContaining(String name) {
+    public List<Product> findByName(String name) {
         return productRepository.findByNameContainingIgnoreCase(name);
     }
 

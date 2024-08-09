@@ -1,30 +1,28 @@
 package com.example.demo.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty; // For mapping JSON properties
+import lombok.AllArgsConstructor; // For generating an all-args constructor
+import lombok.Getter; // For generating getters
+import lombok.NoArgsConstructor; // For generating a no-args constructor
+import lombok.Setter; // For generating setters
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter // Generates getters for all fields
+@Setter // Generates setters for all fields
+@NoArgsConstructor // Generates a no-args constructor
+@AllArgsConstructor // Generates an all-args constructor
 public class Authdto {
 
-    private Long id;
+    private Long id; // Unique identifier for the user
 
-    @JsonProperty("name")
-    private String name;
-    
-    @JsonProperty("email")
-    private String email;
+    @JsonProperty("name") // Maps this field to the "name" property in JSON
+    private String name; // User's name
 
-    @JsonProperty("password")
-    private String password;
+    @JsonProperty("email") // Maps this field to the "email" property in JSON
+    private String email; // User's email address
 
-    @JsonProperty("confirmpass")
-    private String confirmpass;
-   
+    @JsonProperty("password") // Maps this field to the "password" property in JSON
+    private String password; // User's password
+
+    @JsonProperty("confirmpass") // Maps this field to the "confirmpass" property in JSON
+    private String confirmpass; // Confirm password field
 }

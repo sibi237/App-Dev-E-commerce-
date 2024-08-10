@@ -20,4 +20,9 @@ public class ProductService {
     public Product getProductById(Long id) {
         return productRepository.findById(id).orElse(null);
     }
+
+    // Add this method to save a new product
+    public Product saveCase(Product newCase) {
+        return productRepository.save(newCase);
+    }
 }
